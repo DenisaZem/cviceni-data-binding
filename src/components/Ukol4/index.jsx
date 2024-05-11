@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 
 /*
@@ -18,20 +19,55 @@ Zadání 6: Pokud uživatel správně vyplnil obě pole, do stavu `error` nastav
 */
 
 export const Ukol4 = () => {
+  const [login, setLogin] = useState('');
+  const [heslo, setheslo] = useState('');
+  const [error, setError] = useState('');
+
+
+  const onSubmit = (event) => {
+    event.preventDefault();
+    if (login === '') {
+      setError('Chybí login.');
+    } else if (heslo === '') {
+      setError('Chybí heslo.');
+    } else {
+      setError('Přihlášení proběhlo úspěšně.');
+      console.log({ login, heslo })
+    }
+  };
+
+  const onSubmitLog = (event) => {
+    event.preventDefault();
+    setLogin(event.target.value)
+    console.log(login)
+  };
+
+  const onSubmitHes = (event) => {
+    event.preventDefault();
+    setheslo(event.target.value)
+    console.log(heslo)
+  };
+
   return (
     <>
-      <div className="error"></div>
-      <form>
+      <div className="error">{error}</div>
+      <form onSubmit={onSubmit}>
         <div className="field">
           <label>
             Login:
-            <input type="text" />
+            <input 
+              value={login} 
+              onChange={onSubmitLog} 
+              type="text" />
           </label>
         </div>
         <div className="field">
           <label>
             Heslo:
-            <input type="password" />
+            <input 
+              value={heslo} 
+              onChange={onSubmitHes} 
+              type="password" />
           </label>
         </div>
         <button type="submit">Přihlásit</button>
@@ -39,3 +75,4 @@ export const Ukol4 = () => {
     </>
   );
 };
+
